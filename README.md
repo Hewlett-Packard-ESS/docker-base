@@ -15,6 +15,9 @@ ADD yourservice.conf /etc/supervisord.d/yourservice.conf
 
 ## Chef-client
 Chef-Client is pre installed and configured as a supervisor process, running on a 120 second interval.
+
+The general idea is that chef-client will only provide surface level configuration of the container, no actual package installations.
+
 In order for chef-client to run OK and register itself on the chef server, you need to provide it with a client.rb:
 ```
 chef_server_url "https://your-chef-server"

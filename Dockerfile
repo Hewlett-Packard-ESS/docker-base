@@ -20,6 +20,10 @@ RUN mkdir -p /etc/supervisord.d && \
     mkdir -p /etc/chef && \
     mkdir -p /var/log/supervisord
 
+# Expose mounts
+VOLUME ["/storage"]
+WORKDIR /storage
+
 # Add the supervisor configuration files and launch it
 ADD supervisord.conf /etc/supervisord.conf
 ADD chef-client.service.conf /etc/supervisord.d/chef-client.service.conf
