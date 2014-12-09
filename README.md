@@ -39,3 +39,6 @@ chef:
    - ./client:/etc/etc
 ```
 where ./client contains a client.rb and validation.pem
+
+## Persistence
+/storage is exposed as a volume. 
