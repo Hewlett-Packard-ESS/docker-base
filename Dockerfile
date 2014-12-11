@@ -12,12 +12,8 @@ RUN yum -y install python-setuptools tar wget curl which && \
 # Install supervisor
 RUN easy_install supervisor
 
-# Install chef-client
-RUN curl -L https://www.opscode.com/chef/install.sh | bash
-
 # Setup the directories that are required
 RUN mkdir -p /etc/supervisord.d && \
-    mkdir -p /etc/chef && \
     mkdir -p /var/log/supervisord
 
 # Expose mounts
@@ -26,5 +22,4 @@ WORKDIR /storage
 
 # Add the supervisor configuration files and launch it
 ADD supervisord.conf /etc/supervisord.conf
-ADD chef-client.service.conf /etc/supervisord.d/chef-client.service.conf
 CMD ["supervisord", "-c", "/etc/supervisord.conf"]
