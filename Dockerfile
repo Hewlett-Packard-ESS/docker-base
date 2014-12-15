@@ -14,7 +14,8 @@ RUN easy_install supervisor
 
 # Setup the directories that are required
 RUN mkdir -p /etc/supervisord.d && \
-    mkdir -p /var/log/supervisord
+    mkdir -p /var/log/supervisord && \
+    mkdir -p /var/run
 
 # Expose mounts
 VOLUME ["/storage"]
@@ -22,4 +23,4 @@ WORKDIR /storage
 
 # Add the supervisor configuration files and launch it
 ADD supervisord.conf /etc/supervisord.conf
-CMD ["supervisord", "-c", "/etc/supervisord.conf"]
+CMD ["supervisord", "-c", "/etc/supervisord.conf", "-j", "/var/run/supervisor.pid"]
