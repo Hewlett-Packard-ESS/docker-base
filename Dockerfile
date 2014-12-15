@@ -2,7 +2,7 @@ FROM centos:centos7
 MAINTAINER Karl Stoney <karl.stoney@hp.com>
 
 # Install the EPEL repository and do a yum update
-RUN yum -y install http://mirrors.nic.cz/epel/7/x86_64/e/epel-release-7-2.noarch.rpm && \ 
+RUN yum -y install http://www.mirrorservice.org/sites/dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm && \ 
     yum -y update
 
 # Install a bunch of packages we want, and then clean yum
