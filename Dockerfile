@@ -10,7 +10,7 @@ RUN yum -y install python-setuptools tar wget curl which && \
     yum -y clean all
 
 # Install supervisor
-RUN easy_install supervisor
+RUN easy_install supervisor supervisor-stdout
 
 # Setup the directories that are required
 RUN mkdir -p /etc/supervisord.d && \
