@@ -17,6 +17,9 @@ RUN mkdir -p /etc/supervisord.d && \
     mkdir -p /var/log/supervisord && \
     mkdir -p /var/run
 
+# Set the environment up
+ENV TERM xterm-256color
+
 # Expose mounts
 VOLUME ["/storage"]
 WORKDIR /storage
