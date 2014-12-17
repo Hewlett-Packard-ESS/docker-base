@@ -12,6 +12,13 @@ And including it in your Dockerfile:
 FROM hpess/base:latest
 ADD yourservice.conf /etc/supervisord.d/yourservice.conf
 ```
-
+## Supervisor-stdout
+Supervisor-stdout is also installed, giving you the capability to redirect the stdout and stderr from your child process to PID 1, this meals you'll see the output when attaching to a container, or using fig logs.  To make use of this, add the following two lines to your program definitions:
+```
+[program:foo]
+command=/bin/echo bar
+stdout_events_enabled = true
+stderr_events_enabled = true
+```
 ## Persistence
-/storage is exposed as a volume. 
+/storage is exposed as a volume, stick stuff in there.
