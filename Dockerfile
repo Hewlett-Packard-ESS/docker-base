@@ -6,7 +6,7 @@ RUN yum -y install http://www.mirrorservice.org/sites/dl.fedoraproject.org/pub/e
     yum -y update
 
 # Install a bunch of packages we want, and then clean yum
-RUN yum -y install python-setuptools tar wget curl sudo which && \
+RUN yum -y install python-setuptools tar wget curl sudo which passwd && \
     yum -y clean all
 
 # Install supervisor
