@@ -6,10 +6,8 @@ RUN sed -i '/enabled=1/ c\enabled=0' /etc/yum/pluginconf.d/fastestmirror.conf
 
 # Install the EPEL repository and do a yum update
 RUN yum -y install http://www.mirrorservice.org/sites/dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm && \ 
-    yum -y update
-
-# Install a bunch of packages we want, and then clean yum
-RUN yum -y install python-setuptools tar wget curl sudo which passwd && \
+    yum -y update && \
+    yum -y install python-setuptools tar wget curl sudo which passwd && \
     yum -y clean all
 
 # Install supervisor
