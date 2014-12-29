@@ -23,8 +23,15 @@ ENV TERM xterm-256color
 
 # Expose mounts
 VOLUME ["/storage"]
+
+# Any shell scripts in this directory will be executed before supervisor starts
+VOLUME ["/preboot"]
+
+# This is the working directory
 WORKDIR /storage
 
 # Add the supervisor configuration files and launch it
 ADD supervisord.conf /etc/supervisord.conf
-CMD ["supervisord", "-c", "/etc/supervisord.conf", "-j", "/var/run/supervisor.pid"]
+
+COPY start.sh /usr/local/bin/start.sh
+CMD ["/usr/local/bin/start.sh"]

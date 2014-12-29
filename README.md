@@ -20,5 +20,11 @@ command=/bin/echo bar
 stdout_events_enabled = true
 stderr_events_enabled = true
 ```
+
+## Pre-supervisor Setup
+Sometimes you need to execute scripts before services are setup and configured.  In those situations please COPY an executable .sh file to the exposed volume /volume.
+
+Any files in there will be executed PRIOR to supervisord starting.
+
 ## Persistence
 /storage is exposed as a volume, stick stuff in there.

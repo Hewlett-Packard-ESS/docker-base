@@ -1,1 +1,1 @@
-docker build -t hpess/base:latest . 
+sudo docker build -t hpess/base:latest . 
