@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -e
 DEBUG=${DEBUG:-"false"}
 function debug() {
 if [ "$DEBUG" == "true" ]; then
