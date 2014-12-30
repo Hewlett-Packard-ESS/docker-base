@@ -1,14 +1,34 @@
 #!/bin/bash
+
+DEBUG=${DEBUG:-"false"}
+function debug() {
+if [ "$DEBUG" == "true" ]; then
+  echo " => $1"
+fi
+}
+
 PREBOOT=`ls /preboot | wc -l`
 if [ "$PREBOOT" -gt "0" ] && [ ! -f "/preboot.done" ]; then
-  echo " => Executing preboot scripts..."
+  debug " => Executing preboot scripts..."
   for each in /preboot/*.sh ; do echo " => Executing: $each" ; bash $each ; done
   touch /preboot.done
 fi
 
 HOME=${HOME:-"/root"}
 if [ "$#" -gt 0 ]; then
-  . $HOME/.bashrc
+  if [ -f "$HOME/.bashrc" ]; then
+    debug "Executing $HOME/.bashrc"
+    . $HOME/.bashrc
+  fi
+  if [ -f "/etc/profile" ]; then
+    debug "Executing /etc/profile"
+    . /etc/profile
+  fi
+  PROFILED=`ls /etc/profile.d | wc -l`
+  if [ "$PROFILED" -gt "0" ]; then
+    debug "Executing profile.d scripts..."
+    for each in /etc/profile.d/*.sh ; do debug "Executing: $each" ; . $each ; done
+  fi
   echo " => Executing: $*"
   $*
 else
@@ -17,7 +37,7 @@ else
     echo " => Starting Supervisor..."
     supervisord -c /etc/supervisord.conf &
     SPID="$!"
-    echo " => Supervisor PID: $SPID"
+    debug "Supervisor PID: $SPID"
     trap "echo ' => Please wait, gracefully shutting down...' && kill $SPID >/dev/null 2>&1 && wait $SPID" TERM INT
     wait $SPID
   else
