@@ -24,9 +24,6 @@ ENV TERM xterm-256color
 # Expose mounts
 VOLUME ["/storage"]
 
-# Any shell scripts in this directory will be executed before supervisor starts
-VOLUME ["/preboot"]
-
 # This is the working directory
 WORKDIR /storage
 
