@@ -29,7 +29,6 @@ if [ "$#" -gt 0 ]; then
     debug "Executing /etc/bashrc"
     . /etc/bashrc
   fi
-  echo "$*"
   set -e
   echo " => Executing: $*"
   $*
