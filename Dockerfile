@@ -16,7 +16,8 @@ RUN easy_install supervisor supervisor-stdout
 # Setup the directories that are required
 RUN mkdir -p /etc/supervisord.d && \
     mkdir -p /var/log/supervisord && \
-    mkdir -p /var/run
+    mkdir -p /var/run && \
+    mkdir -p /preboot
 
 # Set the environment up
 ENV TERM xterm-256color
