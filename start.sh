@@ -24,10 +24,9 @@ if [ "$#" -gt 0 ]; then
     debug "Executing /etc/profile"
     . /etc/profile
   fi
-  PROFILED=`ls /etc/profile.d | wc -l`
-  if [ "$PROFILED" -gt "0" ]; then
-    debug "Executing profile.d scripts..."
-    for each in /etc/profile.d/*.sh ; do debug "Executing: $each" ; . $each ; done
+  if [ -f "/etc/bashrc" ]; then
+    debug "Executing /etc/bashrc"
+    . /etc/bashrc
   fi
   echo " => Executing: $*"
   $*
