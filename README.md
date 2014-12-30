@@ -10,7 +10,7 @@ command=/bin/echo bar
 And including it in your Dockerfile:
 ```
 FROM hpess/base:latest
-ADD yourservice.conf /etc/supervisord.d/yourservice.conf
+COPY yourservice.conf /etc/supervisord.d/yourservice.conf
 ```
 ## Supervisor-stdout
 Supervisor-stdout is also installed, giving you the capability to redirect the stdout and stderr from your child process to PID 1, this meals you'll see the output when attaching to a container, or using fig logs.  To make use of this, add the following two lines to your program definitions:
@@ -22,7 +22,7 @@ stderr_events_enabled = true
 ```
 
 ## Pre-supervisor Setup
-Sometimes you need to execute scripts before services are setup and configured.  In those situations please COPY an executable .sh file to the exposed volume /volume.
+Sometimes you need to execute scripts before services are setup and configured.  In those situations please COPY an executable .sh file to the volume /preboot.
 
 Any files in there will be executed PRIOR to supervisord starting.
 

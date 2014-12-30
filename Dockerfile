@@ -31,7 +31,7 @@ VOLUME ["/preboot"]
 WORKDIR /storage
 
 # Add the supervisor configuration files and launch it
-ADD supervisord.conf /etc/supervisord.conf
+COPY supervisord.conf /etc/supervisord.conf
 
 COPY start.sh /usr/local/bin/start.sh
-CMD ["/usr/local/bin/start.sh"]
+ENTRYPOINT ["/usr/local/bin/start.sh"]
