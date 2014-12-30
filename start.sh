@@ -16,6 +16,7 @@ fi
 
 HOME=${HOME:-"/root"}
 if [ "$#" -gt 0 ]; then
+  set +e
   if [ -f "$HOME/.bashrc" ]; then
     debug "Executing $HOME/.bashrc"
     . $HOME/.bashrc
@@ -28,6 +29,8 @@ if [ "$#" -gt 0 ]; then
     debug "Executing /etc/bashrc"
     . /etc/bashrc
   fi
+  echo "$*"
+  set -e
   echo " => Executing: $*"
   $*
 else
