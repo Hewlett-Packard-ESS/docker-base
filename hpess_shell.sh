@@ -106,7 +106,7 @@ if [ $? -eq 0 ]; then \
     echo "'$Green'"$(__git_ps1 " (%s)"); \
   else \
     echo "'$IRed'"$(__git_ps1 " {%s}"); \
-  fi) '$BBlue'$(thepath \w \W)'$Color_Off'\$ "; \
+  fi) '$BIWhite'$(thepath \w \W)'$Color_Off'\$ "; \
 else \
-  echo " '$Blue'$(thepath \w \W)'$Color_Off'\$ "; \
+  echo " '$IWhite'$(thepath \w \W)'$Color_Off'\$ "; \
 fi)'
