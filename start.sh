@@ -1,15 +1,16 @@
 #!/bin/bash
 set -e
-DEBUG=${DEBUG:-"false"}
 function debug() {
 if [ "$DEBUG" == "true" ]; then
+  DEBUG=${DEBUG:-"false"}
   echo " => $1"
 fi
 }
+export -f debug
 
 PREBOOT=`ls /preboot | wc -l`
 if [ "$PREBOOT" -gt "0" ] && [ ! -f "/preboot.done" ]; then
-  debug " => Executing preboot scripts..."
+  debug "Executing preboot scripts..."
   for each in /preboot/*.sh ; do debug "Executing: $each" ; bash $each ; done
   touch /preboot.done
 fi
