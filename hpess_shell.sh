@@ -88,7 +88,7 @@ NewLine="\n"
 Jobs="\j"
 
 USER=${USER:-'root'}
-HPESS_ENV=${HPESS_ENV:-'hpess'}
+HPESS_ENV=${HPESS_ENV:-${HOSTNAME:-'hpess'}}
 
 function thepath() {
 if [ "${#1}" -gt 15 ]; then
