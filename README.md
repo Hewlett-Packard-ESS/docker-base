@@ -6,7 +6,7 @@ The latest version of supervisor is installed, to enable us to run multiple proc
 ```
 [program:foo]
 command=/bin/echo bar
-user=hpess
+user=docker
 ```
 And including it in your Dockerfile:
 ```
@@ -18,7 +18,7 @@ Supervisor-stdout is also installed, giving you the capability to redirect the s
 ```
 [program:foo]
 command=/bin/echo bar
-user=hpess
+user=docker
 stdout_events_enabled = true
 stderr_events_enabled = true
 ```
