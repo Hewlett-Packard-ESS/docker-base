@@ -21,14 +21,13 @@ if [ "$#" -gt 0 ]; then
   if [ -f "$HOME/.bashrc" ]; then
     debug "Executing $HOME/.bashrc"
     . $HOME/.bashrc
+  else
+    debug "Executing /etc/bashrc"
+    . /etc/bashrc
   fi
   if [ -f "/etc/profile" ]; then
     debug "Executing /etc/profile"
     . /etc/profile
-  fi
-  if [ -f "/etc/bashrc" ]; then
-    debug "Executing /etc/bashrc"
-    . /etc/bashrc
   fi
   set -e
   echo " => Executing: $*"

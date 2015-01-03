@@ -29,7 +29,4 @@ Sometimes you need to execute scripts before services are setup and configured. 
 Any files in there will be executed PRIOR to supervisord starting.
 
 ## Environment 
-The entrypoint script to this container will execute $USER/.bashrc, /etc/bashrc, /etc/profile and /etc/profile.d/*.sh therefore if there are any environmental settings you whish to enforce, please create the relevant .sh files in /etc/profile.d
-
-## Persistence
-/storage is exposed as a volume, stick stuff in there.
+The entrypoint script to this container will execute $USER/.bashrc or /etc/bashrc, /etc/profile and /etc/profile.d/*.sh therefore if there are any environmental settings you whish to enforce, please create the relevant .sh files in /etc/profile.d

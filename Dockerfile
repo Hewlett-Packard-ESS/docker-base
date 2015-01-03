@@ -20,21 +20,19 @@ RUN easy_install supervisor supervisor-stdout && \
 # Set the environment up
 ENV TERM xterm-256color
 
-# Expose the working directory as a mount
-VOLUME ["/storage"]
-WORKDIR /storage
-
 # Setup users and Groups that we will use in sub containers.
 # Users and Groups are a bit of a PITA with docker at the moment
 RUN groupadd -g 1250 docker && \
     useradd -u 1250 -g 1250 docker && \
-    useradd -r -u 750 -g 1250 -s /sbin/nologin docker_nl && \
     chage -I -1 -m 0 -M 99999 -E -1 docker && \
-    chage -I -1 -m 0 -M 99999 -E -1 docker_nl 
+    mkdir -p /storage && \
+    chown docker:docker /storage
 
 # Add the supervisor configuration files and launch it
 COPY supervisord.conf /etc/supervisord.conf
+COPY preboot/* /preboot/
 COPY start.sh /usr/local/bin/start.sh
 COPY hpess_shell.sh /etc/profile.d/hpess_shell.sh
+WORKDIR /storage
  
 ENTRYPOINT ["/usr/local/bin/start.sh"]
