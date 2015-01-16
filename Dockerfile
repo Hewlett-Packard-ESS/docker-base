@@ -11,7 +11,7 @@ RUN yum -y install http://www.mirrorservice.org/sites/dl.fedoraproject.org/pub/e
     yum -y clean all
 
 # Install supervisor & supervisor stdout
-RUN easy_install supervisor supervisor-stdout && \
+RUN easy_install supervisor supervisor-stdout pip && \
     mkdir -p /etc/supervisord.d && \
     mkdir -p /var/log/supervisord && \
     mkdir -p /var/run && \
