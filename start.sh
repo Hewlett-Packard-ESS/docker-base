@@ -38,6 +38,7 @@ else
     echo " => Only a single process defined in supervisord.  Starting process directly!"
     SERVICE_FILE=`ls -1 /etc/supervisord.d`
     SERVICE_USER=`cat /etc/supervisord.d/$SERVICE_FILE | grep -i 'user=' | awk -F'user=' '{print $2}'`
+    SERVICE_USER=${SERVICE_USER:-root}
     SERVICE_COMMAND=`cat /etc/supervisord.d/$SERVICE_FILE | grep -i 'command=' | awk -F'command=' '{print $2}'`
     debug "Executing '$SERVICE_COMMAND' as $SERVICE_USER"
     su -c "$SERVICE_COMMAND" $SERVICE_USER
