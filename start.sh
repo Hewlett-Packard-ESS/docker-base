@@ -34,7 +34,7 @@ if [ "$#" -gt 0 ]; then
   $*
 else
   SERVICES=`ls /etc/supervisord.d | wc -l`
-  if [ "$SERVICES" -eq "1" ] && [ "$FORCE_SUPERVISOR" == "true" ]; then
+  if [ "$SERVICES" -eq "1" ] || [ "$FORCE_SUPERVISOR" == "true" ]; then
     echo " => Only a single process defined in supervisord.  Starting process directly!"
     SERVICE_FILE=`ls -1 /etc/supervisord.d`
     SERVICE_USER=`cat /etc/supervisord.d/$SERVICE_FILE | grep -i 'user=' | awk -F'user=' '{print $2}'`
