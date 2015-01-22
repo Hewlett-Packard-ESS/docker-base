@@ -34,8 +34,15 @@ if [ "$#" -gt 0 ]; then
   $*
 else
   SERVICES=`ls /etc/supervisord.d | wc -l`
-  if [ "$SERVICES" -gt "0" ]; then
-    echo " => Starting Supervisor..."
+  if [ "$SERVICES" -eq "1" ] && [ "$FORCE_SUPERVISOR" == "true" ]; then
+    echo " => Only a single process defined in supervisord.  Starting process directly!"
+    SERVICE_FILE=`ls -1 /etc/supervisord.d`
+    SERVICE_USER=`cat /etc/supervisord.d/$SERVICE_FILE | grep -i 'user=' | awk -F'user=' '{print $2}'`
+    SERVICE_COMMAND=`cat /etc/supervisord.d/$SERVICE_FILE | grep -i 'command=' | awk -F'command=' '{print $2}'`
+    debug "Executing '$SERVICE_COMMAND' as $SERVICE_USER"
+    su -c "$SERVICE_COMMAND" $SERVICE_USER
+  elif [ "$SERVICES" -gt "1" ]; then
+    echo " => Starting Supervisor as multiple processes found..."
     supervisord -c /etc/supervisord.conf &
     SPID="$!"
     debug "Supervisor PID: $SPID"

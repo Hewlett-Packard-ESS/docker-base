@@ -13,6 +13,10 @@ And including it in your Dockerfile:
 FROM hpess/base:latest
 COPY yourservice.conf /etc/supervisord.d/yourservice.conf
 ```
+
+## None-Supervisor user
+Supervisor is only used when there are multiple services defined in /etc/supervisord.d, if there is only a single file the container will just run directly the `command=` as the `user=` as defined in that file.  This is because theres no need for the additional overhead of supervisord, when you can set a container with a single process to `restart=always`.  However, if you want to force supervisord to do your process management then set the environment variable `FORCE_SUPERVISOR=true`.
+
 ## Supervisor-stdout
 Supervisor-stdout is also installed, giving you the capability to redirect the stdout and stderr from your child process to PID 1, this meals you'll see the output when attaching to a container, or using fig logs.  To make use of this, add the following two lines to your program definitions:
 ```
