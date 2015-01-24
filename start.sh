@@ -42,6 +42,7 @@ else
     SERVICE_COMMAND=`cat /etc/supervisord.d/$SERVICE_FILE | grep -i 'command=' | awk -F'command=' '{print $2}'`
     SERVICE_ENV=`cat /etc/supervisord.d/$SERVICE_FILE | grep -i 'environment' | awk -F'environment=' '{print $2}'`
     if [ ! "$SERVICE_ENV" == "" ]; then
+      SERVICE_ENV=${SERVICE_ENV//\"/ }
       declare ${SERVICE_ENV//,/ }
       export ${SERVICE_ENV//,/ }
     fi
