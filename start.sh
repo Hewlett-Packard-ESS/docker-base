@@ -40,6 +40,11 @@ else
     SERVICE_USER=`cat /etc/supervisord.d/$SERVICE_FILE | grep -i 'user=' | awk -F'user=' '{print $2}'`
     SERVICE_USER=${SERVICE_USER:-root}
     SERVICE_COMMAND=`cat /etc/supervisord.d/$SERVICE_FILE | grep -i 'command=' | awk -F'command=' '{print $2}'`
+    SERVICE_ENV=`cat /etc/supervisord.d/$SERVICE_FILE | grep -i 'environment' | awk -F'environment=' '{print $2}'`
+    if [ ! "$SERVICE_ENV" == "" ]; then
+      declare ${SERVICE_ENV//,/ }
+      export ${SERVICE_ENV//,/ }
+    fi
     debug "Executing '$SERVICE_COMMAND' as $SERVICE_USER"
     su -c "$SERVICE_COMMAND" $SERVICE_USER
   elif [ "$SERVICES" -gt "1" ]; then
