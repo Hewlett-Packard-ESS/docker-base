@@ -47,15 +47,18 @@ else
       export ${SERVICE_ENV//,/ }
     fi
     debug "Executing '$SERVICE_COMMAND' as $SERVICE_USER"
-    su -c "$SERVICE_COMMAND" $SERVICE_USER
+    su -c "$SERVICE_COMMAND" $SERVICE_USER &
+    SPID="$!"
   elif [ "$SERVICES" -gt "1" ]; then
     echo " => Starting Supervisor as multiple processes found..."
     supervisord -c /etc/supervisord.conf &
     SPID="$!"
-    debug "Supervisor PID: $SPID"
-    trap "echo ' => Please wait, gracefully shutting down...' && kill $SPID >/dev/null 2>&1 && wait $SPID" TERM INT
-    wait $SPID
   else
     echo " => WARNING: There are no defined services in /etc/supervisord.d, skipping supervisor startup!"
+    exit 0
   fi
+
+  debug "Primary Process PID: $SPID"
+  trap "echo ' => Please wait, gracefully shutting down...' && kill $SPID >/dev/null 2>&1 && wait $SPID" TERM INT
+  wait $SPID
 fi
