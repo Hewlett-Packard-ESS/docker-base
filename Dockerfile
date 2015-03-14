@@ -31,8 +31,9 @@ RUN groupadd -g 1250 docker && \
 # Add the supervisor configuration files and launch it
 COPY supervisord.conf /etc/supervisord.conf
 COPY preboot/* /preboot/
-COPY start.sh /usr/local/bin/start.sh
+
 COPY hpess_shell.sh /etc/profile.d/hpess_shell.sh
 WORKDIR /storage
  
 ENTRYPOINT ["/usr/local/bin/start.sh"]
+COPY start.sh /usr/local/bin/start.sh
