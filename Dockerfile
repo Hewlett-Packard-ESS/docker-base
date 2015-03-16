@@ -34,6 +34,7 @@ COPY preboot/* /preboot/
 
 COPY hpess_shell.sh /etc/profile.d/hpess_shell.sh
 WORKDIR /storage
+ENV HPESS_ENV base
  
 ENTRYPOINT ["/usr/local/bin/start.sh"]
 COPY start.sh /usr/local/bin/start.sh
