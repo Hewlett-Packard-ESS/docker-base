@@ -47,9 +47,12 @@ else
 
   function finish {
      debug "Detected SIGTERM, Gracefully Shutting Down..."
-     debug "Forwarding SIGTERM to Child PID: $child"
-     `sleep 2; kill -TERM $child` &
+     debug "Forwarding SIGTERM to Sub Shell PID: $child"
+     (sleep 0.5; kill -TERM $child) &
      wait $parent
+     exit_code=$?
+     debug "Sudo exited with Exit Code: $exit_code"
+     exit $exit_code
   }
   trap finish TERM INT
 
@@ -68,18 +71,18 @@ else
     fi
     info "Only a single process defined in supervisord.  Starting $SERVICE_NAME directly!"
     debug "Executing '$SERVICE_COMMAND' as $SERVICE_USER"
-    su $SERVICE_USER -c "$SERVICE_COMMAND" &
-    parent=$!
   elif [ "$SERVICES" -gt "1" ]; then
     info "Multiple processes defined in supervisor config, starting supervisord..."
-    su root -c "supervisord -c /etc/supervisord.conf" &
-    parent=$!
+    SERVICE_USER=root
+    SERVICE_COMMAND="supervisord -c /etc/supervisord.conf"
   else
     warn "There are no defined services in /etc/supervisord.d, skipping supervisor startup!"
     exit 0
   fi
-  sleep 1
+  sudo -E -H -u $SERVICE_USER bash "$SERVICE_COMMAND" &
+  parent=$!
+  sleep 0.5
   child=$(pgrep -P $parent )
-  debug "Parent PID: $parent, Child PID: $child"
+  debug "Sudo PID: $parent, Sub Shell PID: $child"
   wait $parent
 fi
