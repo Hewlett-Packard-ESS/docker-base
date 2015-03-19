@@ -79,7 +79,7 @@ else
     warn "There are no defined services in /etc/supervisord.d, skipping supervisor startup!"
     exit 0
   fi
-  sudo -E -H -u $SERVICE_USER bash "$SERVICE_COMMAND" &
+  sudo -E -H -u $SERVICE_USER bash -c "$SERVICE_COMMAND" &
   parent=$!
   sleep 0.5
   child=$(pgrep -P $parent )
