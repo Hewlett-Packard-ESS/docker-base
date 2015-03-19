@@ -1,1 +1,1 @@
-sudo docker build -t hpess/base:latest . 
+docker build -t hpess/base:master . 
