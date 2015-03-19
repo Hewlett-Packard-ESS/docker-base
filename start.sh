@@ -48,7 +48,7 @@ else
   function finish {
      debug "Detected SIGTERM, Gracefully Shutting Down..."
      debug "Forwarding SIGTERM to Sub Shell PID: $child"
-     (sleep 0.5; kill -TERM $childi >/dev/null 2>&1) &
+     (sleep 0.5; kill -TERM $child >/dev/null 2>&1) &
      wait $parent
      exit_code=$?
      debug "Sudo exited with Exit Code: $exit_code"
