@@ -32,9 +32,12 @@ RUN groupadd -g 1250 docker && \
 COPY supervisord.conf /etc/supervisord.conf
 COPY preboot/* /preboot/
 
-COPY hpess_shell.sh /etc/profile.d/hpess_shell.sh
+COPY scripts/hpess_shell.sh /etc/profile.d/hpess_shell.sh
+COPY scripts/start.sh /usr/local/bin/start.sh
+COPY scripts/funcs.sh /usr/local/bin/funcs.sh
+
 WORKDIR /storage
 ENV HPESS_ENV base
  
 ENTRYPOINT ["/usr/local/bin/start.sh"]
-COPY start.sh /usr/local/bin/start.sh
+
