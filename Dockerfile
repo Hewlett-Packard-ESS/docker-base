@@ -29,7 +29,7 @@ RUN groupadd -g 1250 docker && \
     chown docker:docker /storage
 
 # Disable requiretty on sudo as we use it for context switching
-RUN echo "Defaults !requiretty" >> /etc/sudoers
+# RUN echo "Defaults !requiretty" >> /etc/sudoers
 
 # Add the supervisor configuration files and launch it
 COPY supervisord.conf /etc/supervisord.conf
@@ -42,4 +42,4 @@ RUN ln -s /usr/local/bin/hpess_shell.sh /etc/profile.d/hpess_shell.sh
 WORKDIR /storage
 ENV HPESS_ENV base
  
-ENTRYPOINT ["/usr/local/bin/start.sh"]
+ENTRYPOINT ["/usr/local/bin/start_container.sh"]

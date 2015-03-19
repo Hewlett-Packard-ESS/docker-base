@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-source funcs.sh
+source helper_funcs.sh
 
 PREBOOT=`ls /preboot | wc -l`
 if [ "$PREBOOT" -gt "0" ] && [ ! -f "/preboot.done" ]; then
@@ -70,7 +70,7 @@ else
         exit 0
     fi
 
-    sudo -E -H -u $SERVICE_USER env PATH=$PATH bash -c "source /usr/local/bin/funcs.sh; $SERVICE_COMMAND" &
+    su -c "$SERVICE_COMMAND" $SERVICE_USER &
     parent=$!
     sleep 0.5
     child=$(pgrep -P $parent )
