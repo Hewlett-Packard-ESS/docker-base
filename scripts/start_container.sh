@@ -24,7 +24,7 @@ if [ "$#" -gt 0 ]; then
         . /etc/profile
     fi
     set -e
-    echo " => Executing: $*"
+    info "Executing: $*"
     $*
 
 else
