@@ -90,23 +90,33 @@ Jobs="\j"
 USER=${USER:-'root'}
 HPESS_ENV=${HPESS_ENV:-${HOSTNAME:-'hpess'}}
 
-function thepath() {
-if [ "${#1}" -gt 15 ]; then
-  echo "~/$2"
-else
-  echo $1
+UColor=$BBlue
+if [ "$USER" == "root" ]; then
+  UColor=$BPurple
 fi
-}
+
+# Check if we have git_ps1
+if ! declare -f __git_ps1 > /dev/null; then
+    if [ ! -f "/usr/local/bin/.git-prompt.sh" ]; then
+        wget --quiet -P /tmp https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
+        if [ $? -eq 0 ]; then
+            mv /tmp/git-prompt.sh /usr/local/bin/.git-prompt.sh
+            source /usr/local/bin/.git-prompt.sh
+        else
+            echo Attempted to download git-prompt for git command line support but download failed!
+        fi
+    else
+        source /usr/local/bin/.git-prompt.sh
+    fi
+fi
 
 # I appreciate we're not using git in hpess/base, but it just makes it easier for the future
-export PS1=$IBlack$USER@$HPESS_ENV$Color_Off'$(git branch &>/dev/null;\
-if [ $? -eq 0 ]; then \
+export PS1="$BBlack[$UColor$USER@$HPESS_ENV$Color_Off"'$(git branch &>/dev/null;\
+if [ $? -eq 0 ] && declare -f __git_ps1 > /dev/null; then \
   echo "$(echo `git status` | grep "nothing to commit" > /dev/null 2>&1; \
   if [ "$?" -eq "0" ]; then \
-    echo "'$Green'"$(__git_ps1 " (%s)"); \
+    echo "'$Green'"$(__git_ps1 " %s"); \
   else \
-    echo "'$IRed'"$(__git_ps1 " {%s}"); \
-  fi) '$BIWhite'$(thepath \w \W)'$Color_Off'\$ "; \
-else \
-  echo " '$IWhite'$(thepath \w \W)'$Color_Off'\$ "; \
-fi)'
+    echo "'$IRed'"$(__git_ps1 " %s"); \
+  fi)"; \
+fi)'$BBlack]$Color_Off' \w\n\$ '
